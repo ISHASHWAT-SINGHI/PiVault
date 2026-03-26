@@ -1,0 +1,7 @@
+DATA/
+OS-backend-update.tar.gz
+backend-update.tar.gz
+pivault-backend/node_modules/
+pivault-frontend/node_modules/
+pivault-frontend/dist/
+.env
