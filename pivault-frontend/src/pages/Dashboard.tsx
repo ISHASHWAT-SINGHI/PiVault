@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { Image as ImageIcon, FileText, Film, Upload } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import StorageCard from '../components/StorageCard';
-import FileCard from '../components/FileCard';
 import UploadDialog from '../components/UploadDialog';
+import FileManager from './FileManager';
 import api from '../services/api';
 
 interface SystemStatus {
@@ -14,31 +14,19 @@ interface SystemStatus {
   };
 }
 
-interface FileItem {
-  id: string;
-  name: string;
-  type: string;
-  isDir: boolean;
-  size?: string;
-  updatedAt: string;
-}
-
 export default function Dashboard() {
   const [systemStatus, setSystemStatus] = useState<SystemStatus | null>(null);
-  const [files, setFiles] = useState<FileItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
 
   const fetchData = async () => {
       try {
-        const [statusRes, filesRes] = await Promise.all([
-          api.get('/dashboard/status'),
-          api.get('/storage/list').catch(() => ({ data: [] })) // Mock empty if files API fails but dashboard succeeds
+        const [statusRes] = await Promise.all([
+          api.get('/dashboard/status')
         ]);
 
         setSystemStatus(statusRes.data?.data || statusRes.data || statusRes);
-        setFiles(filesRes.data?.data || []);
       } catch (err: any) {
         setError("Could not load dashboard data. Please make sure the backend is running.");
       } finally {
@@ -89,23 +77,9 @@ export default function Dashboard() {
         ))}
       </div>
 
-      <div>
-        <h2 className="text-xl font-bold text-slate-900 mb-4">Recent Files</h2>
-        {files.length > 0 ? (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-            {files.filter(file => !file.isDir).slice(0, 10).map(file => (
-              <FileCard key={file.id} file={file} onClick={() => window.location.href = '/files'} />
-            ))}
-          </div>
-        ) : (
-          <div className="bg-slate-50 border border-dashed border-slate-300 rounded-xl p-12 text-center">
-            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <FileText className="w-8 h-8 text-slate-400" />
-            </div>
-            <h3 className="text-lg font-medium text-slate-900 mb-1">No files found</h3>
-            <p className="text-slate-500 text-sm">Upload some files to see them here.</p>
-          </div>
-        )}
+      <div className="pt-4 border-t border-slate-200 mt-8">
+        <h2 className="text-xl font-bold text-slate-900 mb-4">File Explorer</h2>
+        <FileManager />
       </div>
 
       <UploadDialog open={isUploadOpen} onOpenChange={setIsUploadOpen} onSuccess={fetchData} currentPath="" />

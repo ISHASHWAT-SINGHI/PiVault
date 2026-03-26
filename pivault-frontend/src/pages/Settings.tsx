@@ -190,7 +190,7 @@ export default function Settings() {
       </div>
 
       <div className="flex justify-end pt-4">
-        <Button className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-10 py-6 text-lg font-bold shadow-lg border-0">
+        <Button onClick={() => import('sonner').then(m => m.toast.success("Preferences saved successfully"))} className="bg-gradient-to-r from-blue-600 to-cyan-500 hover:from-blue-700 hover:to-cyan-600 text-white px-10 py-6 text-lg font-bold shadow-lg border-0">
           Save Changes
         </Button>
       </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Users, UserPlus, Shield, Trash2, Edit, MoreVertical, Loader2, AlertCircle } from 'lucide-react';
+import { Users, UserPlus, Shield, Trash2, Edit, Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { Badge } from '../components/ui/Badge';
@@ -25,7 +25,6 @@ export default function AdminPanel() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
   const [editingUser, setEditingUser] = useState<UserItem | null>(null);
@@ -60,7 +59,6 @@ export default function AdminPanel() {
     } catch (err: any) {
       toast.error(err.response?.data?.message || 'Failed to delete user');
     }
-    setOpenDropdown(null);
   };
 
   const filteredUsers = users.filter(
@@ -168,29 +166,23 @@ export default function AdminPanel() {
                 <TableCell className="text-slate-500 text-sm">
                   {user.joined ? new Date(user.joined).toLocaleDateString() : 'N/A'}
                 </TableCell>
-                <TableCell className="text-right relative">
-                  <Button 
-                    variant="outline" 
-                    className="h-8 w-8 p-0 border-transparent text-slate-400 hover:text-slate-900 bg-transparent"
-                    onClick={() => setOpenDropdown(openDropdown === user.username ? null : user.username)}
-                  >
-                    <MoreVertical className="h-4 w-4" />
-                  </Button>
-                  
-                  {openDropdown === user.username && (
-                    <div className="absolute right-8 top-10 w-40 bg-white border border-slate-200 rounded-xl shadow-xl z-10 py-1 overflow-hidden">
-                      <button onClick={() => { setEditingUser(user); setOpenDropdown(null); }} className="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 w-full text-left">
-                        <Edit className="w-4 h-4 mr-2 text-slate-400" /> Edit
-                      </button>
-                      <button className="flex items-center px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 w-full text-left cursor-not-allowed opacity-50">
-                        <Shield className="w-4 h-4 mr-2 text-slate-400" /> Role
-                      </button>
-                      <div className="border-t border-slate-100 my-1"></div>
-                      <button onClick={() => handleDelete(user.id, user.username)} className="flex items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 w-full text-left">
-                        <Trash2 className="w-4 h-4 mr-2 text-red-400" /> Delete
-                      </button>
-                    </div>
-                  )}
+                <TableCell className="text-right">
+                  <div className="flex justify-end gap-2">
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setEditingUser(user)} 
+                      className="h-8 px-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50 border-slate-200"
+                    >
+                      <Edit className="w-4 h-4 mr-1" /> Edit
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => handleDelete(user.id, user.username)} 
+                      className="h-8 px-2 text-red-500 hover:text-red-700 hover:bg-red-50 border-slate-200"
+                    >
+                      <Trash2 className="w-4 h-4" />
+                    </Button>
+                  </div>
                 </TableCell>
               </TableRow>
             )) : (

@@ -20,7 +20,8 @@ export default function EditUserDialog({ open, onOpenChange, user, onSuccess }: 
     username: '',
     password: '',
     email: '',
-    role: 'user'
+    role: 'user',
+    storageQuotaGB: 5
   });
 
   useEffect(() => {
@@ -29,7 +30,8 @@ export default function EditUserDialog({ open, onOpenChange, user, onSuccess }: 
         username: user.username || '',
         password: '', // Kept empty unless changing
         email: user.email || '',
-        role: user.role || 'user'
+        role: user.role || 'user',
+        storageQuotaGB: user.storageQuotaGB || 5
       });
     }
   }, [user, open]);
@@ -121,18 +123,34 @@ export default function EditUserDialog({ open, onOpenChange, user, onSuccess }: 
             <p className="text-xs text-slate-500 mt-1">Useful if user lost their root access token.</p>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="edit-role">Global Role</Label>
-            <select
-              id="edit-role"
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              className="w-full h-10 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-              disabled={loading || user.username === 'pi3s'}
-            >
-              <option value="user">Standard User</option>
-              <option value="admin">Administrator</option>
-            </select>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-role">Global Role</Label>
+              <select
+                id="edit-role"
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                className="w-full h-10 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                disabled={loading || user.username === 'pi3s'}
+              >
+                <option value="user">Standard User</option>
+                <option value="admin">Administrator</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="edit-quota">Storage Quota (GB)</Label>
+              <Input
+                id="edit-quota"
+                type="number"
+                min="1"
+                max="1000"
+                value={formData.storageQuotaGB}
+                onChange={(e) => setFormData({ ...formData, storageQuotaGB: parseInt(e.target.value) || 5 })}
+                className="bg-slate-50 border-slate-200"
+                disabled={loading}
+              />
+            </div>
           </div>
 
           <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">

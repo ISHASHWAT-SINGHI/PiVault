@@ -26,23 +26,24 @@ export default function QuickActions() {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-6">
         {actions.map((action) => (
-          <div key={action.name} className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-md transition-all group flex flex-col">
+          <div 
+            key={action.name} 
+            className="bg-white rounded-2xl p-6 border border-slate-200 shadow-sm hover:border-blue-300 hover:shadow-md transition-all group flex flex-col cursor-pointer"
+            onClick={() => {
+              if (action.name === 'Upload Files') setUploadOpen(true);
+              else if (action.name === 'Create Folder') setCreateOpen(true);
+              else {
+                toast.info(`Please navigate to the File Manager to ${action.name.toLowerCase()}.`);
+                navigate('/files');
+              }
+            }}
+          >
             <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${action.color} flex items-center justify-center mb-5 group-hover:-translate-y-1 transition-transform shadow-md`}>
               <action.icon className="w-8 h-8 text-white" />
             </div>
             <h3 className="text-slate-900 font-bold text-lg mb-2">{action.name}</h3>
             <p className="text-slate-500 text-sm mb-6 flex-1">{action.description}</p>
-            <Button 
-              className="w-full bg-slate-900 hover:bg-slate-800 text-white border-0"
-              onClick={() => {
-                if (action.name === 'Upload Files') setUploadOpen(true);
-                else if (action.name === 'Create Folder') setCreateOpen(true);
-                else {
-                  toast.info(`Please navigate to the File Manager to ${action.name.toLowerCase()}.`);
-                  navigate('/files');
-                }
-              }}
-            >
+            <Button className="w-full bg-slate-900 hover:bg-slate-800 text-white border-0 pointer-events-none">
               Execute
             </Button>
           </div>

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Cloud, Home, Heart, Zap, ShieldCheck, HardDrive, HelpCircle, LogOut, Menu, X, Search, Bell, Settings, User as UserIcon } from 'lucide-react';
+import { Cloud, Home, Heart, Zap, ShieldCheck, HardDrive, HelpCircle, LogOut, Menu, X, Search, Bell, Settings, User as UserIcon, Users } from 'lucide-react';
 import { useAuth } from '../context/authContext';
 
 interface JWTPayload {
@@ -38,6 +38,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: Home },
     { name: 'Favorite Folders', href: '/favourites', icon: Heart },
+    { name: 'Shared Storage', href: '/files?path=Shared', icon: Users },
     { name: 'Quick Actions', href: '/actions', icon: Zap },
     ...(user?.role === 'admin' ? [{ name: 'Admin Panel', href: '/admin', icon: ShieldCheck }] : []),
     { name: 'Hardware', href: '/hardware', icon: HardDrive },
@@ -108,7 +109,12 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input 
               type="text" 
-              placeholder="Search files..."
+              placeholder="Search files... (Press Enter)"
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                   navigate(`/files?search=${encodeURIComponent(e.currentTarget.value)}`);
+                }
+              }}
               className="w-full pl-9 pr-4 py-2 border border-slate-200 rounded-lg bg-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all text-sm"
             />
           </div>

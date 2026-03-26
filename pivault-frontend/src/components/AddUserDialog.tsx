@@ -19,7 +19,8 @@ export default function AddUserDialog({ open, onOpenChange, onSuccess }: AddUser
     username: '',
     password: '',
     email: '',
-    role: 'user'
+    role: 'user',
+    storageQuotaGB: 5
   });
 
   if (!open) return null;
@@ -35,7 +36,7 @@ export default function AddUserDialog({ open, onOpenChange, onSuccess }: AddUser
     try {
       await api.post('/admin/users', formData);
       toast.success('System user provisioned successfully');
-      setFormData({ username: '', password: '', email: '', role: 'user' });
+      setFormData({ username: '', password: '', email: '', role: 'user', storageQuotaGB: 5 });
       onSuccess();
       onOpenChange(false);
     } catch (err: any) {
@@ -109,18 +110,34 @@ export default function AddUserDialog({ open, onOpenChange, onSuccess }: AddUser
             <p className="text-xs text-slate-500">This password will authorize local network drive mounts.</p>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="role">Global Role</Label>
-            <select
-              id="role"
-              value={formData.role}
-              onChange={(e) => setFormData({ ...formData, role: e.target.value })}
-              className="w-full h-10 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
-              disabled={loading}
-            >
-              <option value="user">Standard User</option>
-              <option value="admin">Administrator</option>
-            </select>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="role">Global Role</Label>
+              <select
+                id="role"
+                value={formData.role}
+                onChange={(e) => setFormData({ ...formData, role: e.target.value })}
+                className="w-full h-10 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+                disabled={loading}
+              >
+                <option value="user">Standard User</option>
+                <option value="admin">Administrator</option>
+              </select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="quota">Storage Quota (GB)</Label>
+              <Input
+                id="quota"
+                type="number"
+                min="1"
+                max="1000"
+                value={formData.storageQuotaGB}
+                onChange={(e) => setFormData({ ...formData, storageQuotaGB: parseInt(e.target.value) || 5 })}
+                className="bg-slate-50 border-slate-200"
+                disabled={loading}
+              />
+            </div>
           </div>
 
           <div className="flex justify-end gap-3 pt-4 border-t border-slate-100 mt-6">
