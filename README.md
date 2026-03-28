@@ -56,43 +56,43 @@ No subscription. No third-party access. Your files, your hardware, your rules.
 ## 🏗️ Architecture
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                     CLIENT DEVICES                       │
-│          (Browser, Windows File Explorer via SMB)        │
-└───────────────────────┬─────────────────────────────────┘
-                        │ HTTP / Tailscale VPN
-┌───────────────────────▼─────────────────────────────────┐
+┌───────────────────────────────────────────────────────────┐
+│                     CLIENT DEVICES                        │
+│          (Browser, Windows File Explorer via SMB)         │
+└──────────────────────────┬────────────────────────────────┘
+                           │ HTTP / Tailscale VPN
+┌──────────────────────────▼────────────────────────────────┐
 │                  RASPBERRY PI SERVER                      │
 │                                                           │
-│  ┌─────────────────────────────────────────────────────┐ │
-│  │               NGINX Reverse Proxy                    │ │
-│  │  (SSL termination, port 80/443 → localhost:5000)    │ │
-│  └───────────────────────┬─────────────────────────────┘ │
-│                          │                               │
-│  ┌───────────────────────▼─────────────────────────────┐ │
-│  │       Node.js / Express Backend (Port 5000)          │ │
-│  │                                                      │ │
-│  │  Routes:                                             │ │
-│  │  • /api/auth      — Login, Register                 │ │
-│  │  • /api/storage   — Files, Folders, Upload          │ │
-│  │  • /api/dashboard — Stats, Recent Files             │ │
-│  │  • /api/admin     — User Management                 │ │
-│  │  • /api/backup    — Backup Operations               │ │
-│  │                                                      │ │
-│  │  Middleware: JWT Auth, Multer (file streaming)       │ │
-│  └───────────────────────┬─────────────────────────────┘ │
-│                          │                               │
-│  ┌───────────────────────▼─────────────────────────────┐ │
-│  │          Storage Layer                               │ │
-│  │                                                      │ │
-│  │  /mnt/PiVaultStorage/users/<username>/              │ │
-│  │  pivault-backend/data/users.json (User DB)          │ │
-│  └──────────────────────────────────────────────────── ┘ │
+│  ┌─────────────────────────────────────────────────────┐  │
+│  │               NGINX Reverse Proxy                   │  │
+│  │  (SSL termination, port 80/443 → localhost:5000)    │  │
+│  └───────────────────────┬─────────────────────────────┘  │
+│                          │                                │
+│  ┌───────────────────────▼─────────────────────────────┐  │
+│  │       Node.js / Express Backend (Port 5000)         │  │
+│  │                                                     │  │
+│  │  Routes:                                            │  │
+│  │  • /api/auth      — Login, Register                 │  │
+│  │  • /api/storage   — Files, Folders, Upload          │  │
+│  │  • /api/dashboard — Stats, Recent Files             │  │
+│  │  • /api/admin     — User Management                 │  │
+│  │  • /api/backup    — Backup Operations               │  │
+│  │                                                     │  │
+│  │  Middleware: JWT Auth, Multer (file streaming)      │  │
+│  └───────────────────────┬─────────────────────────────┘  │
+│                          │                                │
+│  ┌───────────────────────▼─────────────────────────────┐  │
+│  │          Storage Layer                              │  │
+│  │                                                     │  │
+│  │  /mnt/PiVaultStorage/users/<username>/              │  │
+│  │  pivault-backend/data/users.json (User DB)          │  │
+│  └──────────────────────────────────────────────────── ┘  │
 │                                                           │
-│  ┌───────────────────────────────────────────────────  ┐ │
-│  │  Samba (SMB) Server — Windows Drive Mapping          │ │
-│  └─────────────────────────────────────────────────────┘ │
-└─────────────────────────────────────────────────────────┘
+│  ┌─────────────────────────────────────────────────────┐  │
+│  │  Samba (SMB) Server — Windows Drive Mapping         │  │
+│  └─────────────────────────────────────────────────────┘  │
+└───────────────────────────────────────────────────────────┘
 
 Frontend: React (TypeScript) + Vite + TailwindCSS
 Deployed separately or served via NGINX
