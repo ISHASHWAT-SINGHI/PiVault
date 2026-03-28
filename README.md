@@ -1,10 +1,10 @@
-# 🔐 PiVault — Your Own Private Cloud, At Home
+#  PiVault — Your Own Private Cloud, At Home
 
 > A self-hosted NAS (Network Attached Storage) system built on a Raspberry Pi, giving you full control of your files without monthly cloud subscriptions.
 
 ---
 
-## 📌 Problem Statement
+##  Problem Statement
 
 Cloud storage services like Google Drive, iCloud, and OneDrive charge recurring monthly/yearly fees that compound over time. For families or individuals storing large amounts of data — photos, videos, documents — these costs become significant. Worse, your data sits on servers you don't own or control.
 
@@ -12,7 +12,7 @@ There's no open, affordable, and user-friendly alternative for the average house
 
 ---
 
-## 💡 Solution
+##  Solution
 
 **PiVault** turns a Raspberry Pi and an external hard drive into a fully functional private cloud server. It provides:
 
@@ -24,26 +24,26 @@ No subscription. No third-party access. Your files, your hardware, your rules.
 
 ---
 
-## ✨ Features
+##  Features
 
 | Feature | Description |
 |---|---|
-| 🔐 **JWT Authentication** | Secure login with hashed passwords (bcryptjs) and JSON Web Tokens |
-| 📁 **File Manager** | Upload, download, rename, delete, and browse files/folders in your personal storage |
-| 📂 **Directory Uploads** | Upload entire folders with preserved directory structure |
-| ⭐ **Favourite Folders** | Bookmark and directly navigate to frequently used directories |
-| 📊 **Dashboard** | Live storage usage, system status, recent files, and quick actions |
-| 💻 **Hardware Monitor** | Real-time CPU temperature, RAM usage, and disk health from the Pi |
-| 🛡️ **Admin Panel** | Manage users, set storage quotas, view all users' activity |
-| 🔗 **SMB / Samba Access** | Mount your PiVault as a network drive in Windows Explorer natively |
-| 🌐 **Remote Access** | Access PiVault from anywhere via Tailscale VPN — no port forwarding needed |
-| 💾 **Backup Routes** | Dedicated backup API for critical data management |
-| ⚙️ **Settings Page** | Personal settings, password change, display preferences |
-| 🆘 **Help & Support** | Built-in help page with guides and system information |
+|  **JWT Authentication** | Secure login with hashed passwords (bcryptjs) and JSON Web Tokens |
+|  **File Manager** | Upload, download, rename, delete, and browse files/folders in your personal storage |
+|  **Directory Uploads** | Upload entire folders with preserved directory structure |
+|  **Favourite Folders** | Bookmark and directly navigate to frequently used directories |
+|  **Dashboard** | Live storage usage, system status, recent files, and quick actions |
+|  **Hardware Monitor** | Real-time CPU temperature, RAM usage, and disk health from the Pi |
+|  **Admin Panel** | Manage users, set storage quotas, view all users' activity |
+|  **SMB / Samba Access** | Mount your PiVault as a network drive in Windows Explorer natively |
+|  **Remote Access** | Access PiVault from anywhere via Tailscale VPN — no port forwarding needed |
+|  **Backup Routes** | Dedicated backup API for critical data management |
+|  **Settings Page** | Personal settings, password change, display preferences |
+|  **Help & Support** | Built-in help page with guides and system information |
 
 ---
 
-## 🎯 Use Cases
+##  Use Cases
 
 - **Families**: Share a central drive for photos, videos, and school documents — without paying per member.
 - **Freelancers / Creators**: Store large video/photo projects without worrying about cloud storage caps.
@@ -53,7 +53,7 @@ No subscription. No third-party access. Your files, your hardware, your rules.
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 ┌───────────────────────────────────────────────────────────┐
@@ -114,7 +114,7 @@ Deployed separately or served via NGINX
 
 ---
 
-## 🛠️ Setup Guide
+##  Setup Guide
 
 ### Prerequisites
 
@@ -290,7 +290,7 @@ Note the Tailscale IP shown (`100.x.x.x`) and access PiVault from anywhere using
 
 ---
 
-## 🌐 Access
+##  Access
 
 | Method | URL / Address |
 |---|---|
@@ -303,7 +303,7 @@ Note the Tailscale IP shown (`100.x.x.x`) and access PiVault from anywhere using
 
 ---
 
-## 💰 Cost Comparison
+##  Cost Comparison
 
 Cloud storage requires recurring payments, while PiVault is a one-time setup.
 
@@ -317,7 +317,7 @@ Cloud storage requires recurring payments, while PiVault is a one-time setup.
 
 ---
 
-## ⚠️ Known Limitations
+##  Known Limitations
 
 1. **Single Point of Failure** — If the Raspberry Pi hardware fails, data access is lost until the drive is recovered. No built-in RAID or redundancy.
 2. **No HTTPS Out of the Box** — NGINX is configured for HTTP only. HTTPS requires a domain name and a free Let's Encrypt certificate (`certbot`).
@@ -330,7 +330,7 @@ Cloud storage requires recurring payments, while PiVault is a one-time setup.
 
 ---
 
-## 🔮 Future Improvements
+##  Future Improvements
 
 - [ ] **SQLite / PostgreSQL** — Migrate user and file metadata from `users.json` to a proper database.
 - [ ] **File Versioning & Recycle Bin** — Restore accidentally deleted files.
@@ -346,7 +346,7 @@ Cloud storage requires recurring payments, while PiVault is a one-time setup.
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions are welcome! To get started:
 
@@ -363,7 +363,7 @@ Please ensure:
 
 ---
 
-## 📄 License
+##  License
 
 This project is built as a Final Year Project for academic purposes. Contact the repository owner for licensing details before commercial use.
 
