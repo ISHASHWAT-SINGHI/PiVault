@@ -118,7 +118,7 @@ Deployed separately or served via NGINX
 
 ### Prerequisites
 
-- Raspberry Pi 4 (2GB+ RAM recommended) running Raspberry Pi OS (64-bit)
+- Raspberry Pi 5 (2GB+ RAM recommended) running Raspberry Pi OS (64-bit)
 - USB External Hard Drive (formatted as Ext4)
 - Node.js 18+ installed on the Pi
 - PM2 installed globally: `npm install -g pm2`
